@@ -70,7 +70,7 @@
     }
 
     .brand img {
-      height: 128px;
+      height: clamp(72px, 10vw, 128px);
       width: auto;
       filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
     }
@@ -240,19 +240,28 @@
 
     .map-card iframe {
       width: 100%;
-      height: 320px;
+      height: auto;
+      min-height: 280px;
+      aspect-ratio: 4 / 3;
       border: 0;
       display: block;
     }
 
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0, 33, 71, 0.08);
+    }
+
     table {
       width: 100%;
+      min-width: 520px;
       border-collapse: collapse;
       border: 2px solid #0f4a82;
       background: #ffffff;
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 12px 30px rgba(0, 33, 71, 0.08);
     }
 
     th, td {
@@ -300,10 +309,65 @@
       header { padding-top: 36px; }
     }
 
+    @media (max-width: 640px) {
+      header { padding: 28px 18px; }
+      .nav {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .brand {
+        flex-direction: column;
+      }
+      .brand img { height: 72px; }
+      .nav-links {
+        margin-left: 0;
+        justify-content: center;
+        width: 100%;
+        gap: 8px;
+      }
+      .nav-links a {
+        font-size: 16px;
+        padding: 10px 12px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero { gap: 14px; }
+      .hero p { font-size: 15px; }
+      .tags { gap: 8px; }
+      .tag {
+        font-size: 16px;
+        padding: 10px 12px;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+      }
+      main { padding: 0 16px; }
+      section { padding: 16px; }
+      .map-card iframe {
+        min-height: 220px;
+        aspect-ratio: 4 / 3;
+      }
+      .banner { height: clamp(140px, 36vw, 180px); }
+      .logo-grid { gap: 12px; }
+      .logo-grid img {
+        max-width: 140px;
+        max-height: 80px;
+        padding: 8px;
+      }
+      table { min-width: 420px; }
+      th, td {
+        font-size: 13px;
+        padding: 10px 8px;
+      }
+    }
+
     .logo-grid {
       display: grid;
       gap: 20px;
-      grid-template-columns: repeat(5, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       align-items: center;
       justify-items: center;
     }
@@ -321,10 +385,23 @@
 
     .banner {
       width: 100%;
-      height: 260px;
-      background: url("./vesuvius.jpg") center 80% / cover no-repeat;
+      height: clamp(180px, 24vw, 280px);
+      object-fit: cover;
+      object-position: center 78%;
       border-bottom: 1px solid #dfe3eb;
       box-shadow: inset 0 -40px 40px rgba(0, 0, 0, 0.12);
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition: none !important;
+      }
+      body { background-image: none; }
+      .banner { box-shadow: none; }
+      .logo-grid img { filter: none; box-shadow: none; }
     }
   </style>
 </head>
@@ -332,8 +409,8 @@
   <header>
     <div class="nav">
       <a class="brand" href="https://www.ox.ac.uk" target="_blank" rel="noreferrer">
-        <img src="./logo.png" alt="University of Oxford logo">
-        <img src="./eo_logo.png" alt="OxEO logo">
+        <img src="./logo.png" alt="University of Oxford logo" loading="lazy">
+        <img src="./eo_logo.png" alt="OxEO logo" loading="lazy">
       </a>
       <div class="nav-links">
         <a href="#about">About</a>
@@ -372,7 +449,7 @@
     </div>
   </header>
 
-  <div class="banner" role="img" aria-label="Mount Vesuvius landscape"></div>
+  <img class="banner" src="./vesuvius.jpg" alt="Mount Vesuvius landscape" loading="lazy">
 
   <main>
     <section id="about">
@@ -397,83 +474,85 @@
     <section id="programme">
       <h2>Programme</h2>
       <p class="muted">The programme will be updated on a rolling basis.</p>
-      <table>
-        <thead>
-          <tr>
-            <th>Time</th>
-            <th>Session</th>
-            <th>Speaker</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>10:30 - 11:00</td>
-            <td>Registration</td>
-            <td> </td>
-          </tr>
-          <tr>
-            <td>11:00 - 11:05</td>
-            <td>Welcome remarks</td>
-            <td>TBA</td>
-          </tr>
-          <tr>
-            <td>11:05 - 11:30</td>
-            <td>Keynote lecture</td>
-            <td>TBA</td>
-          </tr>
-          <tr>
-            <td>11:30 - 12:00</td>
-            <td>Contributed talks</td>
-            <td>TBA</td>
-          </tr>
-          <tr>
-            <td>12:00 - 13:00</td>
-            <td>Lunch</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>13:00 - 13:30</td>
-            <td>Keynote lecture</td>
-            <td>TBA</td>
-          </tr>
-          <tr>
-            <td>13:30 - 14:00</td>
-            <td>Contributed talks</td>
-            <td>TBA</td>
-          </tr>
-          <tr>
-            <td>14:00 - 14:10</td>
-            <td>Short break</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>14:10 - 15:00</td>
-            <td>Contributed talks</td>
-            <td>TBA</td>
-          </tr>
-          <tr>
-            <td>15:00 - 15:30</td>
-            <td>Coffee break</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>15:30 - 16:00</td>
-            <td>Breakout sessions</td>
-            <td>Organizing committee</td>
-          </tr>
-          <tr>
-            <td>16:00 - 18:00</td>
-            <td>Poster session, drinks reception</td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>18:30</td>
-            <td>Dinner</td>
-            <td></td>
-          </tr>
-          
-        </tbody>
-      </table>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Session</th>
+              <th>Speaker</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>10:30 - 11:00</td>
+              <td>Registration</td>
+              <td> </td>
+            </tr>
+            <tr>
+              <td>11:00 - 11:05</td>
+              <td>Welcome remarks</td>
+              <td>TBA</td>
+            </tr>
+            <tr>
+              <td>11:05 - 11:30</td>
+              <td>Keynote lecture</td>
+              <td>TBA</td>
+            </tr>
+            <tr>
+              <td>11:30 - 12:00</td>
+              <td>Contributed talks</td>
+              <td>TBA</td>
+            </tr>
+            <tr>
+              <td>12:00 - 13:00</td>
+              <td>Lunch</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>13:00 - 13:30</td>
+              <td>Keynote lecture</td>
+              <td>TBA</td>
+            </tr>
+            <tr>
+              <td>13:30 - 14:00</td>
+              <td>Contributed talks</td>
+              <td>TBA</td>
+            </tr>
+            <tr>
+              <td>14:00 - 14:10</td>
+              <td>Short break</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>14:10 - 15:00</td>
+              <td>Contributed talks</td>
+              <td>TBA</td>
+            </tr>
+            <tr>
+              <td>15:00 - 15:30</td>
+              <td>Coffee break</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>15:30 - 16:00</td>
+              <td>Breakout sessions</td>
+              <td>Organizing committee</td>
+            </tr>
+            <tr>
+              <td>16:00 - 18:00</td>
+              <td>Poster session, drinks reception</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>18:30</td>
+              <td>Dinner</td>
+              <td></td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <section id="venue">
@@ -527,19 +606,19 @@
     <section id="partners">
       <h2>Organized in cooperation with</h2>
       <div class="logo-grid">
-        <img src="logos/university of oxford.png" alt="University of Oxford logo">
-        <img src="logos/st_hughs.png" alt="St Hugh's College logo">
+        <img src="logos/university of oxford.png" alt="University of Oxford logo" loading="lazy">
+        <img src="logos/st_hughs.png" alt="St Hugh's College logo" loading="lazy">
         <!-- <img src="logos/reuben_college_logo.jpg" alt="Reuben College logo"> -->
-        <img src="logos/eodg-logo.png" alt="EODG logo">
-        <img src="logos/earth-science-logo.jpg" alt="Earth Sciences logo">
-        <img src="logos/oxford_geography.jpg" alt="Geography logo">
+        <img src="logos/eodg-logo.png" alt="EODG logo" loading="lazy">
+        <img src="logos/earth-science-logo.jpg" alt="Earth Sciences logo" loading="lazy">
+        <img src="logos/oxford_geography.jpg" alt="Geography logo" loading="lazy">
       </div>
       <h2>Involving scientists funded through</h2>
       <div class="logo-grid">
-        <img src="logos/ukri-nerc.png" alt="UKRI NERC logo">
-        <img src="logos/leverhulme_trust.jpg" alt="Leverhulme Trust logo">
-        <img src="logos/comet.jpg" alt="COMET logo">
-        <img src="logos/nceo.png" alt="NCEO logo">
+        <img src="logos/ukri-nerc.png" alt="UKRI NERC logo" loading="lazy">
+        <img src="logos/leverhulme_trust.jpg" alt="Leverhulme Trust logo" loading="lazy">
+        <img src="logos/comet.jpg" alt="COMET logo" loading="lazy">
+        <img src="logos/nceo.png" alt="NCEO logo" loading="lazy">
       </div>
     </section>
   </main>
